@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pardafaash - Deepfake Detector</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: "Exo 2", sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #121212);
+      color: #e5e5e5;
+      text-align: center;
+      padding: 20px;
+      overflow-y: auto;
+      height: 420px;
+      width: 340px;
+      position: relative;
+      border: 2px solid #ff1e56;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #ff1e56, 0 0 25px #00ffc8;
+      animation: glowPulse 3s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 12px #ff1e56, 0 0 22px #00ffc8; }
+      to { box-shadow: 0 0 20px #ff1e56, 0 0 35px #00ffc8; }
+    }
+
+    /* Floating background question marks */
+    .floating {
+      position: absolute;
+      font-size: 1.5rem;
+      color: rgba(0, 255, 200, 0.15);
+      animation: float 12s infinite linear;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh) rotate(0deg); }
+      to { transform: translateY(-120vh) rotate(360deg); }
+    }
+
+    h1 {
+      color: #ff1e56;
+      font-size: 1.7rem;
+      margin-bottom: 0.2em;
+      text-shadow: 0 0 6px #ff1e56, 0 0 15px #ff1e56aa;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #aaa;
+      margin-bottom: 1.2em;
+    }
+
+    .tagline {
+      background: rgba(0, 255, 200, 0.1);
+      border: 1px solid #00ffc8;
+      padding: 6px 12px;
+      display: inline-block;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 1.5em;
+      color: #00ffc8;
+      text-shadow: 0 0 8px #00ffc8;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 1.5em;
+    }
+
+    .card {
+      flex: 1;
+      background: rgba(255, 30, 86, 0.05);
+      border: 1px solid rgba(255, 30, 86, 0.4);
+      border-radius: 12px;
+      padding: 12px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .card:hover {
+      background: rgba(255, 30, 86, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px #ff1e5670;
+    }
+
+    .card h3 {
+      color: #ff1e56;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 1.5em;
+    }
+
+    button {
+      background: #ff1e56;
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    button:hover {
+      background: #ff3b7b;
+      box-shadow: 0 0 8px #ff1e56aa;
+    }
+
+    .upload {
+      background: #101010;
+      border: 1px solid #00ffc8;
+      color: #00ffc8;
+    }
+
+    .upload:hover {
+      background: #1a1a1a;
+      box-shadow: 0 0 10px #00ffc8aa;
+    }
+
+    /* Detection Results */
+    .results {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      display: none;
+    }
+
+    .real {
+      border: 1px solid #00ffc8;
+      box-shadow: 0 0 10px #00ffc8aa;
+      background: rgba(0, 255, 200, 0.05);
+    }
+
+    .fake {
+      border: 1px solid #ff1e56;
+      box-shadow: 0 0 10px #ff1e56aa;
+      background: rgba(255, 30, 86, 0.05);
+    }
+
+    .results h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .results p {
+      margin: 4px 0;
+      font-size: 0.85rem;
+    }
+
+    /* Loader (scanning animation) */
+    .loader {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .loader-text {
+      color: #00ffc8;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #00ffc8;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 6px #00ffc8aa;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #ff1e56, #00ffc8, #ff1e56);
+      animation: loading 2s linear forwards;
+    }
+
+    @keyframes loading {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background question marks -->
+  <div class="floating" style="left:15%; animation-duration: 14s;">?</div>
+  <div class="floating" style="left:40%; animation-duration: 18s;">?</div>
+  <div class="floating" style="left:70%; animation-duration: 22s;">?</div>
+
+  <h1>⚠ Pardafaash ⚠</h1>
+  <h2>Exposing Deepfakes. Restoring Trust.</h2>
+  <div class="tagline">Chrome Extension • Real-time Web Scanning</div>
+
+  <div class="features">
+    <div class="card">
+      <h3>Browser Integration</h3>
+      <p>Seamlessly scan web content as you browse</p>
+    </div>
+    <div class="card">
+      <h3>Real-time Detection</h3>
+      <p>Instant analysis of images, videos, and audio</p>
+    </div>
+    <div class="card">
+      <h3>Privacy First</h3>
+      <p>Local processing keeps your data secure</p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="scanBtn">🔍 Scan Page</button>
+    <button class="upload" id="uploadBtn">⬆ Upload</button>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader" class="loader">
+    <div class="loader-text">⚡ Scanning for deepfakes...</div>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+  </div>
+
+  <!-- Detection Results Section -->
+  <div id="resultBox" class="results"></div>
+
+  <script>
+    function simulateScan() {
+      const loader = document.getElementById("loader");
+      const resultBox = document.getElementById("resultBox");
+      
+      // Reset
+      loader.style.display = "block";
+      resultBox.style.display = "none";
+
+      // Restart animation
+      const progress = loader.querySelector(".progress");
+      progress.style.width = "0";
+      progress.style.animation = "none";
+      void progress.offsetWidth; // reflow to restart animation
+      progress.style.animation = "loading 2s linear forwards";
+
+      // After 2s, show result
+      setTimeout(() => {
+        loader.style.display = "none";
+        showResult(Math.random() > 0.5 ? "real" : "fake");
+      }, 2100);
+    }
+
+    function showResult(type) {
+      const resultBox = document.getElementById("resultBox");
+      resultBox.style.display = "block";
+      let accuracy = (Math.random() * 10 + 90).toFixed(2); // random 90-100%
+      let confidence = ["Low", "Medium", "High"][Math.floor(Math.random() * 3)];
+
+      if (type === "real") {
+        resultBox.className = "results real";
+        resultBox.innerHTML = `
+          <h3>✅ Content Verified: REAL</h3>
+          <p><strong>Accuracy:</strong> ${accuracy}%</p>
+          <p><strong>Confidence:</strong> ${confidence}</p>
+        `;
+      } else {
+        resultBox.className = "results fake";
+        resultBox.innerHTML = `
+          <h3>❌ Content Detected: FAKE</h3>
+          <p><strong>Accuracy:</strong> ${accuracy}%</p>
+          <p><strong>Confidence:</strong> ${confidence}</p>
+        `;
+      }
+    }
+
+    document.getElementById("scanBtn").addEventListener("click", simulateScan);
+    document.getElementById("uploadBtn").addEventListener("click", simulateScan);
+  </script>
+</body>
+</html>
