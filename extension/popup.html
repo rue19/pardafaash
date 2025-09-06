@@ -3,19 +3,29 @@
   <head>
     <title>Deepfake Detector</title>
     <style>
-      body { font-family: Arial, sans-serif; margin: 10px; }
+      body { font-family: Arial, sans-serif; padding: 10px; width: 300px; }
       #result { margin-top: 10px; font-weight: bold; }
-      #debug { margin-top: 10px; white-space: pre-wrap; font-size: 12px; background: #f4f4f4; padding: 5px; border-radius: 5px; max-height: 150px; overflow-y: auto; display: none; }
-      button { margin-top: 10px; }
+      #debug { display: none; white-space: pre-wrap; font-size: 12px;
+        background: #f8f8f8; border: 1px solid #ddd; padding: 5px; margin-top: 10px; }
     </style>
   </head>
   <body>
     <h3>Deepfake Detector</h3>
-    <input type="file" id="fileInput" />
-    <button id="checkBtn">Check</button>
+
+    <!-- Mode 1: Check by link (autofilled from context menu) -->
+    <input type="text" id="imageUrl" placeholder="Paste image/video/audio URL here" style="width:100%;">
+    <button id="checkUrlBtn">Check URL</button>
+
+    <hr>
+
+    <!-- Mode 2: Upload / Drag-drop -->
+    <input type="file" id="fileInput" accept="image/*,video/*,audio/*">
+    <button id="checkFileBtn">Check File</button>
+
     <div id="result"></div>
     <button id="toggleDebug" style="display:none;">Show Debug</button>
     <div id="debug"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>
