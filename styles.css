@@ -1,0 +1,133 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Exo 2', sans-serif;
+}
+
+/* Background & Container */
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 90%;
+  max-width: 500px;
+  padding: 30px;
+  border: 2px solid #0ff;
+  border-radius: 15px;
+  text-align: center;
+  background: #121212;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #f0f, 0 0 60px #0ff;
+}
+
+/* Title */
+.app-title {
+  font-size: 2.5rem;
+  color: #0ff;
+  margin-bottom: 25px;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #f0f;
+}
+
+/* Input Section */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input[type="file"],
+input[type="url"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #0ff;
+  background: #1c1c1c;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+/* Buttons */
+.button-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn.analyze {
+  background-color: #0ff;
+  color: #000;
+}
+
+.btn.analyze:hover {
+  background-color: #00d4d4;
+}
+
+.btn.reset {
+  background-color: #f0f;
+  color: #fff;
+}
+
+.btn.reset:hover {
+  background-color: #d400d4;
+}
+
+.btn.report {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.btn.report:hover {
+  background-color: #d40000;
+}
+
+/* Feedback */
+.feedback {
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.feedback.fake {
+  border: 2px solid #ff0000;
+  color: #ff0000;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+.feedback.clean {
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.feedback.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .button-section {
+    flex-direction: column;
+  }
+}
