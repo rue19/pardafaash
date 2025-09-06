@@ -3,22 +3,26 @@
   <head>
     <title>Deepfake Detector</title>
     <style>
-      body { font-family: Arial, sans-serif; padding: 10px; width: 300px; }
-      #result { margin-top: 10px; font-weight: bold; }
-      #debug { display: none; white-space: pre-wrap; font-size: 12px;
-        background: #f8f8f8; border: 1px solid #ddd; padding: 5px; margin-top: 10px; }
+      body { font-family: Arial, sans-serif; padding: 10px; width: 320px; }
+      h3 { margin-top: 0; }
+      #result { margin-top: 12px; font-weight: bold; }
+      #debug { display:none; white-space: pre-wrap; font-size: 12px;
+               background: #f8f8f8; border: 1px solid #ddd;
+               padding: 6px; margin-top: 10px; max-height: 200px; overflow-y: auto;}
+      button { margin-top: 6px; padding: 6px 12px; }
+      input[type="text"], input[type="file"] { width: 100%; margin-top: 6px; }
     </style>
   </head>
   <body>
     <h3>Deepfake Detector</h3>
 
-    <!-- Mode 1: Check by link (autofilled from context menu) -->
-    <input type="text" id="imageUrl" placeholder="Paste image/video/audio URL here" style="width:100%;">
+    <label>Paste URL</label>
+    <input type="text" id="urlInput" placeholder="Enter image/video/audio URL">
     <button id="checkUrlBtn">Check URL</button>
 
     <hr>
 
-    <!-- Mode 2: Upload / Drag-drop -->
+    <label>Upload File</label>
     <input type="file" id="fileInput" accept="image/*,video/*,audio/*">
     <button id="checkFileBtn">Check File</button>
 
