@@ -1,0 +1,10 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 15px;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+}
