@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>!pardafaash</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- App Title -->
+    <h1 class="app-title">⚠️ Pardafaash</h1>
+
+    <!-- Input Section -->
+    <div class="input-section">
+      <label class="upload-label">
+        Upload File
+        <input type="file" id="fileInput" accept="image/*,video/*,audio/*">
+      </label>
+
+      <label class="link-label">
+        Paste URL
+        <input type="url" id="linkInput" placeholder="https://example.com/file.mp4">
+      </label>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-section">
+      <button id="analyzeBtn" class="btn analyze">Analyze</button>
+      <button id="resetBtn" class="btn reset">Reset</button>
+    </div>
+
+    <!-- Feedback / Loading -->
+    <div id="feedback" class="feedback hidden">
+      <p id="feedbackMessage"></p>
+    </div>
+
+    <!-- Report Button (conditionally shown) -->
+    <button id="reportBtn" class="btn report hidden">Report</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
