@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Deepfake Detector",
+  "name": "Pardafaash!",
   "version": "1.0",
-  "description": "Detect if images, videos, or audio are deepfakes.",
+  "description": "Detect if images, videos, or audio are deepfakes and also gives the probability scores.",
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
