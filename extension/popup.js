@@ -15,7 +15,7 @@ function showResult(score) {
 }
 
 async function callAPI(formData) {
-  resultDiv.textContent = "⏳ Checking...";
+  resultDiv.textContent = "Checking...";
   debugDiv.style.display = "none";
   toggleDebugBtn.style.display = "none";
 
@@ -36,20 +36,20 @@ async function callAPI(formData) {
       if (data.type && typeof data.type.deepfake !== "undefined") {
         showResult(data.type.deepfake);
       } else {
-        resultDiv.textContent = "⚠️ No deepfake probability found.";
+        resultDiv.textContent = "No deepfake probability found.";
       }
     } else {
-      resultDiv.textContent = "❌ Error: " + (data.error?.message || "Unknown error");
+      resultDiv.textContent = "Error: " + (data.error?.message || "Unknown error");
     }
   } catch (err) {
-    resultDiv.textContent = "❌ Network/API error: " + err.message;
+    resultDiv.textContent = " Network/API error: " + err.message;
   }
 }
 
 // --- URL check ---
 document.getElementById("checkUrlBtn").addEventListener("click", () => {
   const url = document.getElementById("urlInput").value.trim();
-  if (!url) return resultDiv.textContent = "⚠️ Please enter a URL.";
+  if (!url) return resultDiv.textContent = "Please enter a URL.";
 
   const formData = new FormData();
   formData.append("url", url);
@@ -62,7 +62,7 @@ document.getElementById("checkUrlBtn").addEventListener("click", () => {
 // --- File check ---
 document.getElementById("checkFileBtn").addEventListener("click", () => {
   const file = document.getElementById("fileInput").files[0];
-  if (!file) return resultDiv.textContent = "⚠️ Please select a file.";
+  if (!file) return resultDiv.textContent = "Please select a file.";
 
   const formData = new FormData();
   formData.append("media", file);
